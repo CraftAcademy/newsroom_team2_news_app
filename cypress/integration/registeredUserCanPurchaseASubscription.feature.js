@@ -11,6 +11,12 @@ describe('registered user can purchase a subscription', () => {
 			url: "http://localhost:3000/api/articles/2",
 			response: "fixture:specific_article_2.json"
 		});
+
+		cy.route({
+			method: 'POST',
+			url: "http://localhost:3000/api/subscriptions",
+			response: { status: 'paid' }
+		})
 		cy.visit("/");
 		cy.get("#2")
 			.last()
@@ -50,7 +56,23 @@ describe('registered user can purchase a subscription', () => {
 						.type("123", { delay: 10 });
 				});
 
-				cy.get('button').contains('Submit payment').click()
+			cy.get('button').contains('Submit payment').click()
+			cy.get('h2[id="message"]').should('contain', "Thank you for your business!")
+
+			cy.get("#2")
+				.last()
+				.within(() => {
+					cy.get("button")
+						.contains("Read More")
+						.click();
+				});
+			cy.get(".article")
+				.within(() => {
+					cy.get(".spec-title").should("contain", "Premium Article");
+				})
+			cy.get(".article")
+				.should("not.contain", "...")
+				.and("not.contain", 'This article require a premium membership.')
 		})
 
 	});

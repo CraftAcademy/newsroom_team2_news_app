@@ -14,6 +14,7 @@ class App extends Component {
 				<Main fill align="center" justify="center">
 					<Heading>Urban Living</Heading>A source of work / life inspiration for
           young professionals.
+					{this.props.state.flashMessage.length > 0 && <h2 id='message'>{this.props.state.flashMessage}</h2>}
           {this.props.state.showArticleList && <ArticleList />}
 					{this.props.state.readArticle && <SpecificArticle />}
 					{this.props.state.showSubscriptionForm && <Elements><SubscriptionForm /></Elements>}

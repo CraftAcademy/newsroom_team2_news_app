@@ -5,10 +5,28 @@ import {
 	CardCVCElement,
 	injectStripe
 } from "react-stripe-elements";
+import axios from 'axios'
+import { useDispatch } from 'react-redux'
 
-const SubscriptionForm = () => {
-	const submitPayment = (event) => {
-		debugger
+const SubscriptionForm = props => {
+	const dispatch = useDispatch()
+	const submitPayment = async (event) => {
+		event.preventDefault()
+		let stripeResponse = await props.stripe.createToken()
+		let token = stripeResponse.token.id
+		let paymentStatus = await axios.post('http://localhost:3000/api/subscriptions', { stripeToken: token })
+		if (paymentStatus.data.status === 'paid') {
+			dispatch({
+				type: 'FLASH_MESSAGE',
+				payload: {
+					flashMessage: "Thank you for your business!",
+					showSubscriptionForm: false,
+					currentUser: { role: 'subscriber' }
+				}
+			})
+			dispatch({ type: 'HIDE_ARTICLE' })
+
+		}
 	}
 	return (
 		<form id="subscription-form">
@@ -20,7 +38,7 @@ const SubscriptionForm = () => {
 			<label>CVC</label>
 			<CardCVCElement />
 			<button
-			onClick={(event)=> submitPayment(event)}
+				onClick={(event) => submitPayment(event)}
 			>Submit payment</button>
 		</form>
 

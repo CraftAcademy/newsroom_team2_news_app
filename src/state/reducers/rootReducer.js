@@ -31,6 +31,11 @@ const rootReducer = (state = initialState, action) => {
 				readArticle: undefined,
 				showArticleList: false
 			}
+		case 'FLASH_MESSAGE':
+			return {
+				...state,
+				...action.payload
+			}
 		default:
 			return state;
 	}
