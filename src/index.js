@@ -15,10 +15,10 @@ const store = configureStore();
 window.store = store;
 
 ReactDOM.render(
-	<Provider store={store}>
-		<Suspense fallback={(<div>Loading...</div>)}>
-			<App />
-		</Suspense>
-	</Provider>, document.getElementById('root'));
+  <Provider store={store}>
+    <Suspense fallback={(<div>Loading...</div>)}>
+      <App />
+    </Suspense>
+  </Provider>, document.getElementById('root'));
 
 serviceWorker.unregister();

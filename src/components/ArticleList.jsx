@@ -14,7 +14,7 @@ class ArticleList extends Component {
     });
   }
 
-  async articleFetcher (event) {
+  async articleFetcher(event) {
     let id = event.target.dataset.id
     let response = await axios.get(`/articles/${id}`)
     this.props.dispatch({

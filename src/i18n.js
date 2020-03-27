@@ -7,15 +7,15 @@ const fallbackLng = ['en']
 const availableLanguages = ['en', 'sv']
 
 i18n
-	.use(Backend)
-	.use(LanguageDetector)
-	.use(initReactI18next)
-	.init(
-		{
-			fallbackLng,
-			whitelist: availableLanguages,
-			interpolation: { escapeValue: true }
-		}
-	)
+  .use(Backend)
+  .use(LanguageDetector)
+  .use(initReactI18next)
+  .init(
+    {
+      fallbackLng,
+      whitelist: availableLanguages,
+      interpolation: { escapeValue: true }
+    }
+  )
 
-	export default i18n
+export default i18n
