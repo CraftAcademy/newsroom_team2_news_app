@@ -1,23 +1,33 @@
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import ArticleList from "./components/ArticleList";
 import { Grommet, Main, Heading } from "grommet";
 import { grommet } from "grommet/themes";
 import SpecificArticle from "./components/SpecificArticle";
+import { useTranslation } from 'react-i18next'
+import i18n from './i18n'
 
-class App extends Component {
-  render() {
-    return (
-      <Grommet full theme={grommet}>
-        <Main fill align="center" justify="center">
-          <Heading>Urban Living</Heading>A source of work / life inspiration for
-          young professionals.
-          {this.props.state.showArticleList && <ArticleList />}
-          {this.props.state.readArticle && <SpecificArticle />}
-        </Main>
-      </Grommet>
-    );
-  }
+
+const App = props => {
+  const { t } = useTranslation()
+
+  return (
+    <Grommet full theme={grommet}>
+      <Main fill align="center" justify="center">
+        <Heading>{t('header.headline', { key: 'value' })}</Heading>{t('header.tagline')}
+        <small
+          style={{ cursor: 'pointer' }}
+          onClick={() => i18n.changeLanguage('sv')}
+        >{t('languages.swedish')}</small>
+        <small
+          style={{ cursor: 'pointer' }}
+          onClick={() => i18n.changeLanguage('en')}
+        >{t('languages.english')}</small>
+        {props.state.showArticleList && <ArticleList />}
+        {props.state.readArticle && <SpecificArticle />}
+      </Main>
+    </Grommet>
+  )
 }
 
 const mapStateToProps = state => {
