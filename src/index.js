@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
@@ -14,14 +14,11 @@ axios.defaults.baseURL = "http://localhost:3000/api/";
 const store = configureStore();
 window.store = store;
 
-
 ReactDOM.render(
 	<Provider store={store}>
-		<App />
+		<Suspense fallback={(<div>Loading...</div>)}>
+			<App />
+		</Suspense>
 	</Provider>, document.getElementById('root'));
 
 serviceWorker.unregister();
-
-if (window.Cypress) {
-  window.store = store
-}
