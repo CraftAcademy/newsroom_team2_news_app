@@ -1,7 +1,8 @@
 const initialState = {
 	articleList: [],
 	showArticleList: true,
-	currentUser: {}
+	currentUser: {},
+	flashMessage: ''
 }
 
 export default initialState
