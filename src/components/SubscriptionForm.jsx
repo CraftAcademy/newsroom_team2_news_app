@@ -17,7 +17,6 @@ const SubscriptionForm = props => {
     let token = stripeResponse.token.id
     let paymentStatus = await axios.post('http://localhost:3000/api/subscriptions', { stripeToken: token, email: email })
     if (paymentStatus.data.status === 'paid') {
-      // 7th request??
       dispatch({
         type: 'FLASH_MESSAGE',
         payload: {
@@ -27,23 +26,25 @@ const SubscriptionForm = props => {
         }
       })
       dispatch({ type: 'HIDE_ARTICLE' })
-
     }
   }
   return (
     <form id="subscription-form">
-      <h1>FORM!</h1>
       <label>CC Number</label>
-      <CardNumberElement />
+      <CardNumberElement id="cardnumber" />
+
       <label>Expiry Date</label>
-      <CardExpiryElement />
+      <CardExpiryElement id="exp-date" />
+
       <label>CVC</label>
-      <CardCVCElement />
+      <CardCVCElement id="cvc" />
+
       <button
         onClick={(event) => submitPayment(event)}
-      >Submit payment</button>
+      >
+        Submit payment
+      </button>
     </form>
-
   )
 }
 
